@@ -1,0 +1,50 @@
+\subsubsection{Self-Play}
+\begin{comment}
+
+- Dota 2 openai
+    - https://openai.com/five/
+    - https://openai.com/blog/openai-baselines-ppo/
+    
+- phan paper training 1 - agents develop motor skills
+- \cite{selfplay-heinrich}  many real-world applications are in principle games
+
+- schach?
+- go?
+- dota?
+- physical openai
+
+"if you arent really good - your opponent isnt either. if you are getting better - your opponent gets better" - perfect curriculum
+
+"agent that you train in self play is useful for external task"
+
+https://www.youtube.com/watch?v=BJi6N4tDupk
+
+supervised learning - limited by dataset - creates ceiling of how far it can go
+\end{comment}
+
+% subsection ? Monte- Carlo Tree Search?  value network? policy network?
+
+In October 2015, the Al AlphaGo defeated European champion Fan Hui in the Go game. In March 2016, 18-time international champion Lee Sedol was beaten by AlphaGo's successor \cite{GoalphaGosilver2017mastering}. 
+\begin{comment}
+AlphaGo was initially trained with the help of supervised learning, fed with moves from professional players. Afterwards policy-gradient reinforcement learning was applied and the value network was taught to determine the winner of games of the policy network against itself. These networks were then combined with Monte-Carlo Tree Search to select the best possible action from the current state \cite{alphaGosilver2017mastering}.
+\end{comment}
+AlphaGo was initially trained with the help of supervised learning, fed with moves from professional players.
+The problem with supervised learning is that the available data set usually implies an upper limit for the learning performance. Reinforcement learning, on the other hand, learns from its own experience and can advance into areas that humans may not be able to fathom. So the AI AlphaGo has managed to become superhuman and defeat the best Go players in the world, but may not have reached its full potential yet.
+
+As a result, Deepmind developed a program called AlphaGo Zero that learned exclusively through self-play "tabula rasa". This means that the agent did not know any sample moves from expert players or could compare his own with them. Only the rules of the game were given to the agent at the beginning. Starting with random game moves, AlphaGo became the best currently existing "Go" player in the world (beating previously mentioned, champion defeating original AlphaGo 100-0). But not only Go, also Chess and the japanese version of it, "shogi", was mastered by the algorithm \cite{chessSilver2017mastering,GoalphaGosilver2017mastering}. 
+
+Self-play means that the agent always plays against a copy of itself.
+%self-play definition
+Deepminds AlphaZero uses Monte-Carlo Tree Search \cite{montecarlobrowne2012survey} and a deep neural network that estimates the probability of winning the current player has from the active position. This neural network assumes the roles of policy network and value network in a single environment.
+%monte-carlo kurz erklären?
+//
+On april 13, 2019 OpenAI "Five" was the first AI ever to beat a world champion in an esports game named Dota 2. In a best-of-three series, the AI won 2-0. Afterwards, OpenAI Five was made available to all Dota 2 players as opponent or team partner - the potentially largest deployment of a highly professional deep learning agent with whom people can knowingly interact. Out of 7215 games in the first three days, the AI won 99.4\%\cite{dotaOpenAI2019Jun}.
+
+Dota 2 is a highly complicated game, much more complicated than Go. Imagine OpenAI Five as a team of five artificial neural networks, which started with no knowledge. From the bots' point of view, Dota 2 is a structure of 20,000 (compared to chess' 8x8) numbers that reflect what a human eye would see. Another essential difference to board games like chess or go is that Dota 2 has hidden information - only a fraction of the current game board is known to the AI. 180 years of gameplay has played the AI against copies of itself. For every game frame, OpenAI's training system called "Rapid" awards a positive reward when something good has happened and a negative reward when something bad has happened. OpenAI's Proximal Policy Optimization \cite{ppoSchulman2019Mar} is then applied and results in actions immediately before a positive reward being rated better than those prior to a negative reward.
+
+
+%evtl checker by samuel
+
+%evtl TD-Gammon
+
+
