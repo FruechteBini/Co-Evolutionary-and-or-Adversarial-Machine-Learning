@@ -1,4 +1,5 @@
-\subsubsection{Self-Play}
+\subsection{Self-Play, a homogeneous zero-sum scenario}
+\label{selfplay}
 \begin{comment}
 
 - Dota 2 openai
@@ -22,12 +23,13 @@ https://www.youtube.com/watch?v=BJi6N4tDupk
 supervised learning - limited by dataset - creates ceiling of how far it can go
 \end{comment}
 
-% subsection ? Monte- Carlo Tree Search?  value network? policy network?
 
 In October 2015, the Al AlphaGo defeated European champion Fan Hui in the Go game. In March 2016, 18-time international champion Lee Sedol was beaten by AlphaGo's successor \cite{GoalphaGosilver2017mastering}. 
+
 \begin{comment}
 AlphaGo was initially trained with the help of supervised learning, fed with moves from professional players. Afterwards policy-gradient reinforcement learning was applied and the value network was taught to determine the winner of games of the policy network against itself. These networks were then combined with Monte-Carlo Tree Search to select the best possible action from the current state \cite{alphaGosilver2017mastering}.
 \end{comment}
+
 AlphaGo was initially trained with the help of supervised learning, fed with moves from professional players.
 The problem with supervised learning is that the available data set usually implies an upper limit for the learning performance. Reinforcement learning, on the other hand, learns from its own experience and can advance into areas that humans may not be able to fathom. So the AI AlphaGo has managed to become superhuman and defeat the best Go players in the world, but may not have reached its full potential yet.
 

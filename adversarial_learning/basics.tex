@@ -1,2 +1,45 @@
+\begin{comment}
+THOMY:
+
+- Basics?
+was rein?
+	- reinforcement learning? - auf jeden fall
+    - deep neural networks? - deep reinforcement learning (reinforcement mit neuronalen netzen) (q-learning)
+    - value network vs policy network - nein
+    - monte-carlo-search-trees - nein
+    - PPO (proximal policy optimization) -nein
+    - zero sum games (!) - definition - konsistente notation 
+    
+    - Formeln (markov decision processes)
+
+\end{comment}
+
 \section{Basics}
 \label{Basics}
+
+\subsection{Reinforcement Learning}
+
+\subsection{Deep neural networks}
+- reinforcement in neuronalen netzen (evtl sogar q-learning)
+
+\subsection{Markov decision processes}
+\label{mdp}
+
+
+
+\subsection{Zero-sum Markov games}
+\label{zerosumgames}
+
+In zero-sum games the success of one is always the loss of the other. If one Agent gets a positive reward, the opponent gets an equal negative reward. This leads to the fact that the adversaries always pursue opposite goals. Payoff matrices in zero-sum games can be described as (M, -M). In 2-player general-sum games (\textit{bimatrix games} solution depends on M\textsuperscript{1} as well as M\textsuperscript{2}. In zero-sum games the game can be simplified by using M or -M, the solution depends only on one of the two matrices. 2-player zero-sum games are therefore called \textit{matrix games}\cite{basics2hu1998multiagent}.
+\inline{evtl beispiel matrizen zero-sum}
+
+\[ 
+\text{For all a\textsubscript{1}} \in A\textsubscript{1}, a \textsubscript{2} \in A\textsubscript{2}, \text{and s} \in S, R\textsubscript{1}(s, a\textsubscript{1}, a \textsubscript{2}) = - R\textsubscript{2}(s, a\textsubscript{1}, a \textsubscript{2})
+\]
+\\
+where S is the set of states of the environment, A\textsubscript{n} is the collection of actions available to Agent n and $R\textsubscript{i}:S\times A\textsubscript{1}\times A\textsubscript{2} \Rightarrow \mathbb{R}$ is each agents reward function,  given the immediately expected reward obtained by agent \textit{i} for each selection of action sets that the group of agents could make in any state\cite{basics1littman1994markov}.\\
+Therefore, there is actually only one reward function $R\textsubscript{1}$. Agent 1 tries to maximize it and Agent 2 tries to minimize it. Hence, zero-sum games are called adversarial or fully-competitive \cite{basics1littman1994markov}.\\
+If both agents converge, we speak of a Nash Equilibrium.
+In a Nash equilibrium, also called the \textiit{saddle point}, each agent's choice is the best answer to the other agent's choice, resulting in no agent being able to obtain rewards through unilateral deviation\cite{nashgharesifard2013distributed, basics2hu1998multiagent}.
+
+
