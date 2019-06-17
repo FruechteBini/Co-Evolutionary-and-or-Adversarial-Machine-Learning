@@ -6,7 +6,7 @@ Multi-Agent Competition is primarily about training an agent 1 as well as possib
 %anders formulieren
 To achieve this an agent 2 is applied who learns an optimal policy also via reinforcement learning to make agent A's life as difficult as possible \cite{robustPinto2017Mar}.
 
-\subsubsection{Related work}
+\subsubsection{Related work (applications of multi-agent adversarial learning)}
 
 To help understand adversarial learning we will look at some application areas and examples where it has been used for training in a multi-agent environment.\\
 
@@ -18,15 +18,15 @@ The agent showed satisfactory results against many different combinations of opp
 
 Competitive computer games are becoming more and more realistic. The animation of character movements plays an important role. In order to make movements look "realistic", randomness is indispensable. Wampler et al. \cite{animationwampler2010character} used adversarial machine learning to simulate intelligent, forward-thinking, unpredictable movements of a character in a game. 
 For this purpose, agents competing against each other were simulated, among other things to perform was the game "Tap". An agent tries to touch another agent with his hand. The running away opponent develops a policy, which has evasion as a goal.
-The movements were simulated and let observe, how the agents evolve human-like movements. For example, the evasive character takes many quick, small steps as soon as the catcher approaches. This gives him the opportunity to be unpredictable and to dodge to the right or left at any time.
+The movements were simulated and let observe that the agents evolve human-like movements. For example, the evasive character takes many quick, small steps as soon as the catcher approaches. This gives him the opportunity to be unpredictable and to dodge to the right or left at any time.
 The agents also learned to fake movements and guessed the possible strategies of the respective opponent \cite{animationwampler2010character}.
 
-This kind of learning also makes sense in robotics. For example, robots that play football. First, robots have to run, aim, learn to shoot. However, as soon as a defender comes into play, Stone et al. \cite{roboticstone1998towards} said adversarial reinforcement learning would be used to improve both attackers and defenders. The defender would have the opportunity to learn to recognize in which direction the attacker is aiming. The attacker could at the same time adjust his shot path based on the defender's movements. 
+This kind of learning also makes sense in robotics. For example, robots that play football. First, robots have to run, aim, learn to shoot. However, as soon as a defender comes into play, Stone et al. \cite{roboticstone1998towards} suggested adversarial reinforcement learning could be used to improve both attackers and defenders. The defender would have the opportunity to learn to recognize in which direction the attacker is aiming. The attacker could at the same time adjust his shot path based on the defender's movements. 
 Defender and attacker would thus co-develop and challenge each other with an adaptive training set \cite{roboticstone1998towards}.
 
 \subsubsection{State explosion in Multi-Agent environments}
 
-The problem faced when adding additional agents is that it allows the state number to grow exponentially. Learning speed is negatively affected and in many states the precise position of the opponent is not of any relevance \cite{multiuther1997generalizing}.
+One problem faced when adding additional agents is that it allows the state number to grow exponentially. Learning speed is negatively affected and in many states the precise position of the opponent is not of any relevance \cite{multiuther1997generalizing}.
 Describing such a large set of states individually using a value function is intractable, so a form of generalization must be used \cite{boyan1995generalization}. 
 To avoid this exponential mass of states, Uther et al. \cite{multiuther1997generalizing} compared different non-generalizing and generalizing algorithms in a multi-agent environment. 
 Their application case was Hexcer - a two-player multi-agent hexagonal grid soccer game. Two agents are the adversary to each other and try to score/ prevent the enemy from scoring. Their findings showed that both their generalizing algorithms (Continuous U Tree, Fitted Prioritized Sweeping) performed significantly better than the non-generalizing algorithms (Prioritized Sweeping) \cite{multiuther1997generalizing}.

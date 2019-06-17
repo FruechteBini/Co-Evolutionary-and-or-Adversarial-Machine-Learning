@@ -1,8 +1,11 @@
-
+Uesato et al. \cite{uesato18} proposed a failure probability predictor (AVF) for evaluating learning systems. If not stated otherwise, this chapter derives from the original paper. This architecture follows two specific tasks. To find a catastrophic failure of the agent (see section \ref{failure}) and to estimate the \textit{failure probability} up to a fixed \textit{relative accuracy} with high probability of given failure (see section \ref{risk}).\\
+On both objectives, the algorithm has access to historical data and can sample from the distribution $P_X$ over initial states $X$ defined by the environment.\\
+The AVF $f_*:X->[0,1]$ returns the probability of a failure given a initial condition. The estimators were assessed by the total number of experiments required and compared with 
+the \textit{vanilla Monte Carlo} estimator (VMC).
 
 \subsubsection{Failure Search}
 \label{failure}
 
+
 \subsubsection{Risk Estimation}
 \label{risk}
-
