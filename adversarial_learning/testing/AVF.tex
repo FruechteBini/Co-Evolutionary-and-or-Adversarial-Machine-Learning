@@ -6,6 +6,15 @@ the \textit{vanilla Monte Carlo} estimator (VMC).
 \subsubsection{Failure Search}
 \label{failure}
 
+In the first stage the AFV $f_*$ wants to find a catastrophic failure of the agent. Algorithms that search for failures will be called \textit{adversaries}. The adversary can specify initial conditions $x$ and observe the random failure indicator $C = c(x,Z)$ of running the agent on $x$. The algorithm only returns catastrophic failures, consequently when $C = 1$. The agent will be evaluated on samples until a failure is detected.\\\\
+Adversaries are assessed either by the expected number of episodes or the expected time, until a failure is returned. Therefore, the optimal adversary minimizes the expected number of rounds until failure evaluates the agent repeatedly no an instance $x_* \in X$ that maximizes $f_* : X [0,1]$.\\
+To implement this idea Uesato et al. \cite{uesato18} proposed a rather simple procedure: sample a set of initial conditions (size $n$) from the distribution $P_X$ over all initial states $X$ defined by the environment. From this set, pick the initial condition, where $f$ is maximized and run an experiment from this initial condition. Repeat these steps with a new sampled set of initial conditions until a catastrophic failure is found. 
 
 \subsubsection{Risk Estimation}
 \label{risk}
+
+After finding catastrophic failures, the AVF $f_*$ estimates the probability of said failures. The \textit{failure probability} $p$ is estimated using the sample mean:\\
+\begin{equation}
+\hat{P} = \frac{1}{n} \sum_{t=1}^n W_t c(X_t, Z_t)
+\end{equation}
+where $t \in [n]$ and $W_t = \frac{p_x(X_t)}{q(X_t)}$ is the \textit{importance weight} of the t-th sample. 
