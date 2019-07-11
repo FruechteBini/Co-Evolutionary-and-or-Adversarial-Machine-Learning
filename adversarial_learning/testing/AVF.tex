@@ -1,20 +1,37 @@
-Uesato et al. \cite{uesato18} proposed a failure probability predictor (AVF) for evaluating learning systems. If not stated otherwise, this chapter derives from the original paper. This architecture follows two specific tasks. To find a catastrophic failure of the agent (see section \ref{failure}) and to estimate the \textit{failure probability} up to a fixed \textit{relative accuracy} with high probability of given failure (see section \ref{risk}).\\
-On both objectives, the algorithm has access to historical data and can sample from the distribution $P_X$ over initial states $X$ defined by the environment.\\
-The AVF $f_*:X->[0,1]$ returns the probability of a failure given a initial condition. The estimators were assessed by the total number of experiments required and compared with 
-the \textit{vanilla Monte Carlo} estimator (VMC).
+Uesato et al. \cite{uesato18} proposed a failure probability predictor (AVF) for evaluating learning systems. If not stated otherwise, the content of this chapter derives from the original paper. This architecture follows two specific tasks. To find a catastrophic failure of the agent (section \ref{failure}) and to estimate the \textit{failure probability} up to a fixed \textit{relative accuracy} with high probability of given failure (section \ref{risk}).\\
+On both objectives, the algorithm has access to historical data and can sample from the distribution $P_S$ over initial states $S$ defined by the environment.\\
+The AVF $f_*:S \rightarrow [0,1]$ returns the probability of a failure given a initial condition. The estimators were assessed by the total number of experiments required and compared with the \textit{vanilla Monte Carlo} estimator (VMC).
 
 \subsubsection{Failure Search}
 \label{failure}
 
-In the first stage the AFV $f_*$ wants to find a catastrophic failure of the agent. Algorithms that search for failures will be called \textit{adversaries}. The adversary can specify initial conditions $x$ and observe the random failure indicator $C = c(x,Z)$ of running the agent on $x$. The algorithm only returns catastrophic failures, consequently when $C = 1$. The agent will be evaluated on samples until a failure is detected.\\\\
-Adversaries are assessed either by the expected number of episodes or the expected time, until a failure is returned. Therefore, the optimal adversary minimizes the expected number of rounds until failure evaluates the agent repeatedly no an instance $x_* \in X$ that maximizes $f_* : X [0,1]$.\\
-To implement this idea Uesato et al. \cite{uesato18} proposed a rather simple procedure: sample a set of initial conditions (size $n$) from the distribution $P_X$ over all initial states $X$ defined by the environment. From this set, pick the initial condition, where $f$ is maximized and run an experiment from this initial condition. Repeat these steps with a new sampled set of initial conditions until a catastrophic failure is found. 
+In the first stage the AFV $f_*$ wants to find a catastrophic failure of the agent. Algorithms that search for failures of the agent will be called \textit{adversaries}. Those adversaries can specify initial conditions $s$ and observe the random failure indicator $C = c(s,Z)$ of running the agent on $s$ and $Z \sim P_Z$ over some probability distribution $P_Z$ over some set $\mathcal{Z}$, where $c: \chi \times \mathcal{Z} \rightarrow \{0,1\}$. The algorithm only returns catastrophic failures, consequently when $C = 1$. The agent will be evaluated on samples until a failure is detected.\\\\
+Adversaries are assessed either by the expected number of episodes or the expected time, until a failure is returned. Therefore, the optimal adversary minimizes the expected number of rounds until failure evaluates the agent repeatedly no an instance $s_* \in S$ that maximizes $f_* : S \rightarrow [0,1]$.\\
+To implement this idea Uesato et al. \cite{uesato18} proposed a rather simple procedure: sample a set of initial conditions (size $n$) from the distribution $P_S$ over all initial states $S$ defined by the environment. From this set, pick the initial condition, where $f$ is maximized and run an experiment from this initial condition. Repeat these steps with a new sampled set of initial conditions until a catastrophic failure is found. 
 
 \subsubsection{Risk Estimation}
 \label{risk}
 
-After finding catastrophic failures, the AVF $f_*$ estimates the probability of said failures. The \textit{failure probability} $p$ is estimated using the sample mean:\\
+After finding catastrophic failures, the AVF $f_*$ estimates the probability of said failures. This concept uses \textit{importance sampling}, where the distribution $P_S$ is replaced by a \textit{proposal distribution U}. The proposal distribution U is used to create random initial condition $S_t \sim U$ for every timestep $t \in [n]$. After, an experiment is performed to generate $C_t = c(S_t, Z_t)$.
+The \textit{failure probability} $p$ is estimated using the sample mean:
+
 \begin{equation}
-\hat{P} = \frac{1}{n} \sum_{t=1}^n W_t c(X_t, Z_t)
+\hat{P} = \frac{1}{n} \sum_{t=1}^n W_t c(S_t, Z_t)
 \end{equation}
-where $t \in [n]$ and $W_t = \frac{p_x(X_t)}{q(X_t)}$ is the \textit{importance weight} of the t-th sample. 
+, where $W_t = \frac{p_s(S_t}{u(S_t)}$ is the \textit{importance weight} of the t-th sample. $p_s$ denotes the density of $P_S$ and $u$ denotes the density of $U$.\\
+Given that $\hat{P}$ is unbiased for any proposal distribution, a proposal distribution, that minimizes the variance of estimator $\hat{P}$ is wanted. For that Uesato et al. propose $f:\chi \rightarrow [0,1]$ such that:
+\begin{equation}
+P_S(f^{1/2}) := \int f^{1/2}(s')P_X(ds') > 0
+\end{equation}
+let $U_f$ be defined as the distribution over $\chi$ with density $u_f$: 
+\begin{equation}
+u_f(s) = \frac{f^{1/2}(s)p_S(s)}{P_S(f^{1/2})}
+\end{equation}
+Then the variance minimizing proposal distribution $U^*$ is $U_f_*$.\\\\
+The minimizing of the variance only influences the efficiency of the method. $U_f$ still needs to be sampled. With the proposal distribution being $P_S$,  $S \sim P_S$, which is accepted by probability $f^{1/2}(S)$, is chosen. These steps are repeated until a sample is accepted. This process is call \textit{rejection sampling}.\\
+Additionally, to increase robustness of the sampling procedure against errors by $f \neq f_*$, a hyperparameter $\alpha > 0$ is used, so that $u_f$ is redefined to be proportional to $f^\alpha$. By changing the value of $\alpha$, overestimation or underestimation of $f$ can be influenced.
+
+\subsubsection{Continuation Approach}
+\label{continuation}
+In the end, the AVF should be the true failure probability predictor for an agent $A$. The classifier $f$ needs to see many failure cases for training. An efficient way to extract many failure cases is the \textit{continuation approach}, where $f$ learns from a family of related agents that fail often. The agents are evolving during training, therefore agents in earlier stages fail more often. Plus, these agents fail in related ways to the final agent. Consequently, $f$ can learn from agents that were seen earlier in training.\\
+During training, information about the initial condition $S_t^'$ and essential features  $\Theta_t$ of the agent's policy used to collect the failure indicator $C_t^'$ for every timestep $t$ are collected. Finally, a network to predict $\mathbb{P}(C_t^{'} = 1|S_t^{'}, \Theta_t)$ at input $(S_t^{'},\Theta_t)$ is trained. Thus, the AVF kind of co-evolves with the agent.
