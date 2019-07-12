@@ -19,7 +19,7 @@ Goodfellow et al. used as a metaphor:
 \textit{"The generative model can be thought of as analogous to a team of counterfeiters, trying to produce fake currency and use it without detection, while the discriminative model is analogous to the police, trying to detect the counterfeit currency"}, \cite{gansgoodfellow2014generative}
 \end{quote}{}
 \\
-In other words, G and D play a minmax game with the value function V(G,D):
+%In other words, G and D play a minmax game.
 \\
 \begin{comment}
 
@@ -28,13 +28,14 @@ In other words, G and D play a minmax game with the value function V(G,D):
 \label{gans_value_func}
 
 \end{align}
-\end{comment}
+
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.9\textwidth]{adversarial_learning/images/minmax_gan.JPG}
     \label{fig:sumo}
     %\caption{Wird noch ersetzt durch Formel in Text}
 \end{figure}
+\end{comment}
 \\
 This framework is a zero-sum game (section \ref{zerosumgames}). A unique solution exists when $G$ uses the training set repeatedly and $D$ rates each sample 50/50 original/fake.\\
 Both networks use backpropagation, so the generator becomes better at producing samples and the discriminator becomes more effective at detecting counterfeits.
@@ -42,5 +43,5 @@ Both networks use backpropagation, so the generator becomes better at producing 
 \inline{bild? und quelle medium checken!}
 %https://towardsdatascience.com/explained-a-style-based-generator-architecture-for-gans-generating-and-tuning-realistic-6cb2be0f431
 GANs have now been deployed in several areas. For example in the field of video gaming, where textures are edited and reproduced \cite{resolutionGANWang2018Sep} or in the domain of astrophysics, features are recovered in astronomical images \cite{astroGANSchawinski2017Feb}.\\
-Another very interesting application of GANs is the \textit{Style-Based Generator Architecture} developed by Karras et al. of NVIDIA \cite{nvidiaThisPersonDoesNotExistKarras2018Dec}. They extended GANs with style transfer and designed an AI that generates deceptively real images of faces that don't really exist. The generator automatically learns to distinguish and classify different aspects of the image (\textit{styles}) without human supervision. \inline{hier fehlt noch die weiterführung nach \cite{nvidiaThisPersonDoesNotExistKarras2018Dec} ...}
+Another very interesting application of GANs is the \textit{Style-Based Generator Architecture} developed by Karras et al. of NVIDIA \cite{nvidiaThisPersonDoesNotExistKarras2018Dec}. They extended GANs with style transfer and designed an AI that generates deceptively real images of faces that don't really exist. The generator automatically learns to distinguish and classify different aspects of the image (\textit{styles}) without human supervision, such as pose, identity, freckles or hair). This approach not only allows a better insight into the output produced, but also delivers state-of-the-art results - high-resolution images that look more authentic than previously generated images.
 %hier weiterführen GANS --> dann überleitung zum vergleich schaffen

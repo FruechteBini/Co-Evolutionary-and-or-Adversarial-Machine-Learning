@@ -21,9 +21,9 @@
 \end{comment} 
  
  
- To close the training chapter, self-play (section \ref{selfplay}) and GANs (section \ref{gans}) will now be compared.
+ To close the training chapter, self-play (section \ref{selfplay}) and RARL/GANs (section \ref{appl_train}, \ref{gans}) will now be compared.
  For our analysis we consider the zero-sum game (section \ref{zerosumgames}) as a setting. \\
- \inline{RARL? wieviele Netze? }
+ %\inline{RARL? wieviele Netze? }
  %The comparison is interesting because the self-play operates as a homogeneous zero-sum game, while GANs are a heterogeneous entity. This means that in self-play both agents logically follow the same goal, while in GANs opposite goals are pursued.\\
 %GANs sind wohl der allgemeinere Fall - aber warum sollte man dann Self-Play verwenden?
 %\subsubsection{When to use which approach?}
@@ -34,11 +34,12 @@
 The first question we will deal with is: When is what type of adversarial learning applied?
 Of course, what is decisive here is which goal is pursued and, above all, in which environment the agent is to be trained.\\
 %GAN's general case:
-GANs in this case represent the classical approach, where the primary goal is to train an agent and to make the training constantly more difficult by deploying an opposite agent. We call this type of adversarial training, in which rewards are given for opposite goals, heterogeneous. For instance the examples mentioned in section \ref{multiagent}.\\
+RARL/GANs in this case represent the classical approach, where the primary goal is to train an agent and to make the training constantly more difficult by deploying an opposite agent. We call this type of adversarial training, in which rewards are given for opposite goals, heterogeneous. For instance the examples mentioned in section \ref{multiagent}.\\
 %This is to increase the complexity of the desired agent \ref{multiagent}. One must mention, however, that the opponent of the trained algorithm was at the end only a helpful means to the end
 %When self-play?
+\\
 Zero-sum games, in which two players pursue the same goal and have the same environment and resources are particularly suitable for self-play, and are called homogeneous. Examples would be AlphaGo Zero, both agents have one playing field, the same number of stones and the same mutually opposing goal to win. Equivalent to this are for example Dota 2 (one map, destruction of the opponent's fortress) or Chess (a board, checkmate as target).
-In principle, all applications implemented as self-play could also be implemented as a classical adversarial approach. On the other hand, not every classical adversarial training could be implemented self-play. So the idea of implementing two generators in one GAN would make little sense. A discriminator would still be needed to evaluate the generated data.\\
+In principle, all applications implemented as self-play could also be implemented as a classical adversarial approach. Means, Go could also be learned after the idea of RARL with two different neural networks. However, there is a danger that the adversary will become so good that he will prevent the actual main agent from learning further. On the other hand, not every classical adversarial training could be implemented self-play. So the idea of implementing two generators in one GAN would make little sense. A discriminator would still be needed to evaluate the generated data.\\
 \\
 %\subsubsection{What do the approaches promise /what are the drawbacks?}
 % siehe paper gans (/generator/diskriminator könnte zu gut werden)
@@ -47,4 +48,4 @@ The two frameworks can also be compared regarding the coordination of the advers
 Specifically, G must not be trained too much without updating D. This could cause the Helvetica scenario, in which G collapses too many values of $z$ to the same value of $x$ to have enough diversity to model $p\textsubscript{data}$ \cite{gansgoodfellow2014generative}.
 With self-play, on the other hand, this problem does not exist. Since the agent always plays against itself, or more precisely the strongest version of itself to date, the opponent always has an adequate difficulty level to constantly improve the agent. This can lead to complex behavior strategies that are learned within a simple environment. Self-play can also be seen as the simplest version of adversarial learning, where only the self-playing agent adapts and the environment remains static \cite{gabor19}.
 \\
-Another advantage of self-play (if applicable) is that only one algorithm needs to be implemented, which then competes against itself. For GANs, both generator and discriminator must be implemented and configured separately.
+Another advantage of self-play (if applicable) is that only one algorithm needs to be implemented, which then competes against itself. For GANs, both generator and discriminator must be implemented and configured separately. This means that twice as many neural networks have to be calculated, so self-play proves to be comparatively (if applicable) more efficient.
